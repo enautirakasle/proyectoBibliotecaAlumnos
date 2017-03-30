@@ -32,6 +32,8 @@ public class ConsultarLibro extends JDialog {
 	private JComboBox titulos;
 	private JComboBox num_pag;
 	private JTable tablaPorAutor;
+	private JTable tablaPorTitulo;
+	private JTable tablaNumPag;
 
 	
 	public ConsultarLibro(JDialog parent, boolean modal) {
@@ -80,6 +82,15 @@ public class ConsultarLibro extends JDialog {
 				tabbedPane.addTab("Por Titulo", null, PorTitulo, null);
 				PorTitulo.setLayout(null);
 				{
+					JScrollPane scrollPane = new JScrollPane();
+					scrollPane.setBounds(0, 52, 417, 171);
+					PorTitulo.add(scrollPane);
+					{
+						tablaPorTitulo = new JTable();
+						scrollPane.setViewportView(tablaPorTitulo);
+					}
+				}
+				{
 					JLabel lblTitulos = new JLabel("Titulos ");
 					lblTitulos.setBounds(53, 27, 34, 14);
 					PorTitulo.add(lblTitulos);
@@ -89,7 +100,7 @@ public class ConsultarLibro extends JDialog {
 					titulos.addItemListener(new ItemListener() {
 						public void itemStateChanged(ItemEvent e) {
 							
-							//controladorLibro.seleccionarLibrosPorTitulo((String)titulos.setSelectedItem());
+							controladorLibro.seleccionarLibrosPorTitulo((String)titulos.setSelectedItem());
 						}
 					});
 					titulos.setBounds(146, 24, 228, 20);
@@ -101,12 +112,44 @@ public class ConsultarLibro extends JDialog {
 				tabbedPane.addTab("Por Num Paginas", null, PorNumPag, null);
 				PorNumPag.setLayout(null);
 				{
+					JScrollPane scrollPane = new JScrollPane();
+					scrollPane.setBounds(0, 76, 419, 147);
+					PorNumPag.add(scrollPane);
+					{
+						tablaNumPag = new JTable();
+						scrollPane.setViewportView(tablaNumPag);
+					}
+				}
+				{
 					JLabel lblNumDePginas = new JLabel("Num de P\u00E1ginas");
 					lblNumDePginas.setBounds(54, 30, 76, 14);
 					PorNumPag.add(lblNumDePginas);
 				}
 				{
 					num_pag = new JComboBox();
+					num_pag.addItemListener(new ItemListener() {
+						public void itemStateChanged(ItemEvent e) {
+							int menores;
+							int valor=num_pag.getSelectedIndex();
+							
+							switch(valor){
+							
+							case 1:
+								menores=100;
+								break;
+							case 2:
+								menores=500;
+								break;
+							case 5:
+								menores=10000;
+								break;
+								
+							}
+						
+							controladorLibro.seleccionarMenores(valor);
+							
+						}
+					});
 					num_pag.setModel(new DefaultComboBoxModel(new String[] {"<  100", " > 100  y <  500", "> 500"}));
 					num_pag.setBounds(173, 27, 224, 20);
 					PorNumPag.add(num_pag);

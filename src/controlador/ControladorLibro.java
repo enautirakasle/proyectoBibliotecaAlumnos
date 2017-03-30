@@ -207,6 +207,16 @@ public class ControladorLibro {
 	}
 
 
+	public void seleccionarMenores(int valor) {
+		
+		
+		libros=modelo.seleccionarMenores(valor);
+		consultarLibro.rellenarTablaPorNumPag(libros);
+		
+		
+	}
+
+
 
 	
 
