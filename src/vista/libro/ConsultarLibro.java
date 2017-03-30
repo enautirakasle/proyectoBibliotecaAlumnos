@@ -100,7 +100,7 @@ public class ConsultarLibro extends JDialog {
 					titulos.addItemListener(new ItemListener() {
 						public void itemStateChanged(ItemEvent e) {
 							
-							controladorLibro.seleccionarLibrosPorTitulo((String)titulos.setSelectedItem());
+							//controladorLibro.seleccionarLibrosPorTitulo((String)titulos.setSelectedItem());
 						}
 					});
 					titulos.setBounds(146, 24, 228, 20);

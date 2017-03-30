@@ -210,7 +210,7 @@ public class ControladorLibro {
 	public void seleccionarMenores(int valor) {
 		
 		
-		libros=modelo.seleccionarMenores(valor);
+		libros=modeloLibro.seleccionarMenores(valor);
 		consultarLibro.rellenarTablaPorNumPag(libros);
 		
 		

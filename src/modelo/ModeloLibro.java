@@ -272,8 +272,10 @@ public class ModeloLibro extends Conectar {
 
 			ResultSet rs = pst.executeQuery();// ejecuta
 
-			while (rs.next()) { // coge el titulo que es UNO SOLO
-
+			while (rs.next()) {
+				
+				libro=new Libro();
+				
 				libro.setId(rs.getInt(1));
 				libro.setTitulo(rs.getString(2));
 				libro.setAutor(rs.getString(3));
