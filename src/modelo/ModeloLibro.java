@@ -290,4 +290,33 @@ public class ModeloLibro extends Conectar {
 
 		}
 	}
+
+	public ArrayList<Libro> seleccionarMenores(int menores) throws Exception {
+		PreparedStatement pst;
+		Libro libro = new Libro();
+		ArrayList<Libro> libros=new ArrayList<Libro>();
+		try {
+			pst = cn.prepareStatement("SELECT * FROM LIBROS WHERE num_pag > ?");
+			pst.setInt(1, menores);
+
+			ResultSet rs = pst.executeQuery();// ejecuta
+
+			while (rs.next()) {
+				
+				libro=new Libro();
+				
+				libro.setId(rs.getInt(1));
+				libro.setTitulo(rs.getString(2));
+				libro.setAutor(rs.getString(3));
+				libro.setNum_pag(rs.getInt(4));
+				
+				libros.add(libro);
+			}
+			return libros;
+
+		} catch (Exception e) {
+			throw e;
+
+		}
+	}
 }

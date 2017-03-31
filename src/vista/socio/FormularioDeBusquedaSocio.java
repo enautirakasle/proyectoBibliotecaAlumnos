@@ -52,7 +52,7 @@ public class FormularioDeBusquedaSocio extends JDialog {
 	public FormularioDeBusquedaSocio(GestionSocio parent, boolean modal) {
 		super(parent, modal);
 
-		setBounds(100, 100, 596, 328);
+		setBounds(100, 100, 679, 352);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.SOUTH);
@@ -80,6 +80,8 @@ public class FormularioDeBusquedaSocio extends JDialog {
 		JButton buscarNombre = new JButton("Buscar");
 		buscarNombre.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+
 				controladorSocio.mostrarSociosPorNombre(nombre.getText());
 			}
 		});
@@ -117,6 +119,16 @@ public class FormularioDeBusquedaSocio extends JDialog {
 		});
 		
 		JScrollPane scrollPane = new JScrollPane();
+		
+		JButton limpiar = new JButton("Limpiar Criterios de B\u00FAsqueda");
+		limpiar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				limpiarCampos();
+			}
+
+			
+		});
 		GroupLayout gl_contentPanel = new GroupLayout(contentPanel);
 		gl_contentPanel.setHorizontalGroup(
 			gl_contentPanel.createParallelGroup(Alignment.LEADING)
@@ -138,7 +150,10 @@ public class FormularioDeBusquedaSocio extends JDialog {
 							.addGap(10)
 							.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
 								.addComponent(buscarNombre, GroupLayout.PREFERRED_SIZE, 88, GroupLayout.PREFERRED_SIZE)
-								.addComponent(buscarApellido, GroupLayout.PREFERRED_SIZE, 88, GroupLayout.PREFERRED_SIZE)
+								.addGroup(gl_contentPanel.createSequentialGroup()
+									.addComponent(buscarApellido, GroupLayout.PREFERRED_SIZE, 88, GroupLayout.PREFERRED_SIZE)
+									.addGap(92)
+									.addComponent(limpiar))
 								.addComponent(buscarPoblacion, GroupLayout.PREFERRED_SIZE, 88, GroupLayout.PREFERRED_SIZE)
 								.addComponent(buscarProvincia, GroupLayout.PREFERRED_SIZE, 88, GroupLayout.PREFERRED_SIZE)))
 						.addGroup(gl_contentPanel.createSequentialGroup()
@@ -146,48 +161,53 @@ public class FormularioDeBusquedaSocio extends JDialog {
 							.addComponent(lblSelccionaElAlumno))
 						.addGroup(gl_contentPanel.createSequentialGroup()
 							.addContainerGap()
-							.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 550, GroupLayout.PREFERRED_SIZE)))
+							.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 633, Short.MAX_VALUE)))
 					.addContainerGap())
 		);
 		gl_contentPanel.setVerticalGroup(
 			gl_contentPanel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPanel.createSequentialGroup()
-					.addGap(11)
-					.addComponent(lblSelccionaElAlumno)
-					.addGap(6)
 					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPanel.createSequentialGroup()
-							.addGap(4)
-							.addComponent(lblNombre))
+							.addGap(11)
+							.addComponent(lblSelccionaElAlumno)
+							.addGap(6)
+							.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_contentPanel.createSequentialGroup()
+									.addGap(4)
+									.addComponent(lblNombre))
+								.addGroup(gl_contentPanel.createSequentialGroup()
+									.addGap(1)
+									.addComponent(nombre, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+								.addComponent(buscarNombre))
+							.addGap(6)
+							.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_contentPanel.createSequentialGroup()
+									.addGap(4)
+									.addComponent(lblApellido))
+								.addGroup(gl_contentPanel.createSequentialGroup()
+									.addGap(1)
+									.addComponent(apellido, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+								.addComponent(buscarApellido))
+							.addGap(11)
+							.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblPoblacion)
+								.addGroup(gl_contentPanel.createSequentialGroup()
+									.addGap(1)
+									.addComponent(comboPoblacion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+								.addComponent(buscarPoblacion))
+							.addGap(18)
+							.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_contentPanel.createSequentialGroup()
+									.addGap(4)
+									.addComponent(lblProvincia))
+								.addGroup(gl_contentPanel.createSequentialGroup()
+									.addGap(1)
+									.addComponent(comboProvincias, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+								.addComponent(buscarProvincia)))
 						.addGroup(gl_contentPanel.createSequentialGroup()
-							.addGap(1)
-							.addComponent(nombre, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-						.addComponent(buscarNombre))
-					.addGap(6)
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPanel.createSequentialGroup()
-							.addGap(4)
-							.addComponent(lblApellido))
-						.addGroup(gl_contentPanel.createSequentialGroup()
-							.addGap(1)
-							.addComponent(apellido, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-						.addComponent(buscarApellido))
-					.addGap(11)
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblPoblacion)
-						.addGroup(gl_contentPanel.createSequentialGroup()
-							.addGap(1)
-							.addComponent(comboPoblacion, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-						.addComponent(buscarPoblacion))
-					.addGap(18)
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPanel.createSequentialGroup()
-							.addGap(4)
-							.addComponent(lblProvincia))
-						.addGroup(gl_contentPanel.createSequentialGroup()
-							.addGap(1)
-							.addComponent(comboProvincias, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-						.addComponent(buscarProvincia))
+							.addGap(71)
+							.addComponent(limpiar)))
 					.addGap(7)
 					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE)
 					.addGap(12))
@@ -259,4 +279,12 @@ public class FormularioDeBusquedaSocio extends JDialog {
 		this.comboProvincias.setSelectedIndex(-1);
 		
 	}
+	private void limpiarCampos() {
+		nombre.setText("");
+		apellido.setText("");
+		comboPoblacion.setSelectedIndex(-1);
+		comboProvincias.setSelectedIndex(-1);
+		
+	}
+	
 }

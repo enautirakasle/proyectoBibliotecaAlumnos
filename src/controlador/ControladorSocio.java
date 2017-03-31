@@ -228,7 +228,7 @@ public class ControladorSocio {
 		
 }
 	public void mostrarSociosPorNombre(String nombre) {
-		ArrayList<Socio> socios = this.modeloSocio.selectLikeNombre(nombre);
+		ArrayList<Socio> socios = modeloSocio.selectLikeNombre(nombre);
 		this.formularioBusquedaSocio.rellenarTabla(socios);
 	}
 

@@ -144,7 +144,7 @@ public class ControladorLibro {
 			consultarLibro.rellenarListaAutores(autores);
 			libros = modeloLibro.seleccionarTodos();
 			consultarLibro.rellenarListaTitulos(libros);
-
+			
 			consultarLibro.setVisible(true);
 		
 		} catch (Exception e) {
@@ -205,13 +205,19 @@ public class ControladorLibro {
 		}
 		
 	}
-
-
-	public void seleccionarMenores(int valor) {
+	public void seleccionarMenores(int menores) {
+		ArrayList<Libro> libros=new ArrayList<Libro>();
 		
-		
-		libros=modeloLibro.seleccionarMenores(valor);
-		consultarLibro.rellenarTablaPorNumPag(libros);
+		try {
+			libros=modeloLibro.seleccionarMenores(menores);
+			consultarLibro.rellenarTablaPorNumPag(libros);
+			
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "ERROR AL SELECCIONAR LIBROS");
+		}
+	
+	}
+	public void seleccionarLibrosPorTitulo(String titulo) {
 		
 		
 	}

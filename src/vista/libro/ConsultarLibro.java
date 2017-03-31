@@ -9,6 +9,7 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 import controlador.ControladorLibro;
 import modelo.Libro;
@@ -26,8 +27,8 @@ import javax.swing.JScrollPane;
 public class ConsultarLibro extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
-	
-	private ControladorLibro  controladorLibro;
+
+	private ControladorLibro controladorLibro;
 	private JComboBox autores;
 	private JComboBox titulos;
 	private JComboBox num_pag;
@@ -35,11 +36,10 @@ public class ConsultarLibro extends JDialog {
 	private JTable tablaPorTitulo;
 	private JTable tablaNumPag;
 
-	
 	public ConsultarLibro(JDialog parent, boolean modal) {
-		
-		super(parent,modal);
-		
+
+		super(parent, modal);
+
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -52,13 +52,13 @@ public class ConsultarLibro extends JDialog {
 				JPanel PorAutor = new JPanel();
 				tabbedPane.addTab("Por Autor", null, PorAutor, null);
 				PorAutor.setLayout(null);
-				
+
 				autores = new JComboBox();
 				autores.addItemListener(new ItemListener() {
 					public void itemStateChanged(ItemEvent arg0) {
-						
-						controladorLibro.seleccionarLibrosPorAutor((String)autores.getSelectedItem());
-							
+
+						controladorLibro.seleccionarLibrosPorAutor((String) autores.getSelectedItem());
+
 					}
 				});
 				{
@@ -72,7 +72,7 @@ public class ConsultarLibro extends JDialog {
 				}
 				autores.setBounds(126, 29, 232, 20);
 				PorAutor.add(autores);
-				
+
 				JLabel autor = new JLabel("Autores");
 				autor.setBounds(32, 32, 46, 14);
 				PorAutor.add(autor);
@@ -99,8 +99,8 @@ public class ConsultarLibro extends JDialog {
 					titulos = new JComboBox();
 					titulos.addItemListener(new ItemListener() {
 						public void itemStateChanged(ItemEvent e) {
-							
-							//controladorLibro.seleccionarLibrosPorTitulo((String)titulos.setSelectedItem());
+
+							controladorLibro.seleccionarLibrosPorTitulo(String.valueOf(titulos.getSelectedItem()));
 						}
 					});
 					titulos.setBounds(146, 24, 228, 20);
@@ -129,28 +129,29 @@ public class ConsultarLibro extends JDialog {
 					num_pag = new JComboBox();
 					num_pag.addItemListener(new ItemListener() {
 						public void itemStateChanged(ItemEvent e) {
-							int menores;
-							int valor=num_pag.getSelectedIndex();
-							
-							switch(valor){
-							
+
+							int menores = 0;
+							int valor = num_pag.getSelectedIndex();
+
+							switch (valor) {
+
+							case 0:
+								menores = 100;
+								break;
 							case 1:
-								menores=100;
+								menores = 500;
 								break;
 							case 2:
-								menores=500;
+								menores = 1000;
 								break;
-							case 5:
-								menores=10000;
-								break;
-								
+
 							}
-						
-							controladorLibro.seleccionarMenores(valor);
-							
+
+							controladorLibro.seleccionarMenores(menores);
+
 						}
 					});
-					num_pag.setModel(new DefaultComboBoxModel(new String[] {"<  100", " > 100  y <  500", "> 500"}));
+					num_pag.setModel(new DefaultComboBoxModel(new String[] { ">  100", ">  500", "> 1000" }));
 					num_pag.setBounds(173, 27, 224, 20);
 					PorNumPag.add(num_pag);
 				}
@@ -158,65 +159,88 @@ public class ConsultarLibro extends JDialog {
 		}
 	}
 
-
 	public void rellenarTablaPorAutor(ArrayList<Libro> libros) {
 
-		DefaultTableModel dtm=new DefaultTableModel();
-		
-		String[] encabezados={"ID","TITULO","AUTOR","NUM PAGINAS"};
-		
+		DefaultTableModel dtm = new DefaultTableModel();
+
+		String[] encabezados = { "ID", "TITULO", "AUTOR", "NUM PAGINAS" };
+
 		dtm.setColumnIdentifiers(encabezados);
-		
-		for (Libro libro:libros){
-			
-			String[]  fila={ String.valueOf(libro.getId()),libro.getTitulo(),libro.getAutor(),String.valueOf(libro.getNum_pag())};
+
+		for (Libro libro : libros) {
+
+			String[] fila = { String.valueOf(libro.getId()), libro.getTitulo(), libro.getAutor(),
+					String.valueOf(libro.getNum_pag()) };
 			dtm.addRow(fila);
 		}
 		tablaPorAutor.setModel(dtm);
-		
+
 	}
+
 	public void rellenarTablaPorTitulo(ArrayList<Libro> libros) {
 
-		DefaultTableModel dtm=new DefaultTableModel();
-				
-				String[] encabezados={"ID","TITULO","AUTOR","NUM PAGINAS"};
-				
-				dtm.setColumnIdentifiers(encabezados);
-				
-				for (Libro libro:libros){
-					
-					String[]  fila={ String.valueOf(libro.getId()),libro.getTitulo(),libro.getAutor(),String.valueOf(libro.getNum_pag())};
-					dtm.addRow(fila);
-				}
-				//tablaPorTitulo.setModel(dtm);
-				
-			}
+		DefaultTableModel dtm = new DefaultTableModel();
+
+		String[] encabezados = { "ID", "TITULO", "AUTOR", "NUM PAGINAS" };
+
+		dtm.setColumnIdentifiers(encabezados);
+
+		for (Libro libro : libros) {
+
+			String[] fila = { String.valueOf(libro.getId()), libro.getTitulo(), libro.getAutor(),
+					String.valueOf(libro.getNum_pag()) };
+			dtm.addRow(fila);
+		}
+		tablaPorTitulo.setModel(dtm);
+		// para poder ordenar por las cabeceras
+		TableRowSorter<DefaultTableModel> modeloOrdenado = new TableRowSorter<DefaultTableModel>(dtm);
+		tablaPorTitulo.setRowSorter(modeloOrdenado);
+
+	}
 
 	public ControladorLibro getControladorLibro() {
 		return controladorLibro;
 	}
 
-
 	public void setControladorLibro(ControladorLibro controladorLibro) {
 		this.controladorLibro = controladorLibro;
 	}
 
-
 	public void rellenarListaTitulos(ArrayList<Libro> libros) {
 		titulos.removeAllItems();
-		
-		for (Libro libro:libros){
+
+		for (Libro libro : libros) {
 			titulos.addItem(libro.getTitulo());
 		}
 	}
 
-
 	public void rellenarListaAutores(ArrayList<String> valores) {
 		autores.removeAllItems();
-		
-		for (String autor:valores){	
+
+		for (String autor : valores) {
 			autores.addItem(autor);
 		}
+	}
+
+	public void rellenarTablaPorNumPag(ArrayList<Libro> libros) {
+
+		DefaultTableModel dtm = new DefaultTableModel();
+
+		String[] encabezados = { "ID", "TITULO", "AUTOR", "NUM PAGINAS" };
+
+		dtm.setColumnIdentifiers(encabezados);
+
+		for (Libro libro : libros) {
+
+			String[] fila = { String.valueOf(libro.getId()), libro.getTitulo(), libro.getAutor(),
+					String.valueOf(libro.getNum_pag()) };
+			dtm.addRow(fila);
+		}
+		tablaNumPag.setModel(dtm);
+		// para poder ordenar por las cabeceras
+		TableRowSorter<DefaultTableModel> modeloOrdenado = new TableRowSorter<DefaultTableModel>(dtm);
+		tablaNumPag.setRowSorter(modeloOrdenado);
+
 	}
 
 }
